@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-amazon-navy: #131921;
+  --color-amazon-navyLight: #232F3E;
+  --color-amazon-yellow: #FFD814;
+  --color-amazon-yellowHover: #F7CA00;
+  --color-amazon-red: #B12704;
+  --color-amazon-bg: #EAEDED;
+  --color-amazon-teal: #007185;
+  --color-amazon-green: #007600;
+  
+  --font-sans: 'Inter', 'Arial', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+}
+
+body {
+  background-color: var(--color-amazon-bg);
+  color: #111827;
+  font-family: var(--font-sans);
+}
+
+/* Custom subtle animations */
+@keyframes scan {
+  0%, 100% { top: 0%; }
+  50% { top: 100%; }
+}
+
+.animate-scan {
+  animation: scan 2s infinite ease-in-out;
+}

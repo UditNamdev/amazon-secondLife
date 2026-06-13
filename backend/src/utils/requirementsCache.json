@@ -1,0 +1,150 @@
+{
+  "drone": {
+    "label": "drone",
+    "photos": 5,
+    "photoGuide": [
+      "full top view with propellers",
+      "underside and battery compartment",
+      "camera gimbal close-up",
+      "remote controller",
+      "serial number sticker"
+    ],
+    "fields": [
+      "serial",
+      "model"
+    ],
+    "docs": [
+      "bill"
+    ],
+    "checks": [
+      "Does it power on?",
+      "Are all propeller blades intact?",
+      "Does the camera gimbal move freely?",
+      "Is the battery included?"
+    ],
+    "inspect": "Visually inspect the drone for chassis cracks, chipped or bent propellers, camera lens scratches, gimbal assembly damage, battery swelling, and verify the serial number sticker is intact."
+  },
+  "smarts": {
+    "label": "smart device",
+    "photos": 5,
+    "photoGuide": [
+      "front display or main face",
+      "back casing and sensors",
+      "ports and charging contacts",
+      "serial number or MAC address sticker",
+      "all included accessories and packaging"
+    ],
+    "fields": [
+      "serial",
+      "model",
+      "macAddress"
+    ],
+    "docs": [
+      "bill"
+    ],
+    "checks": [
+      "Does the device power on?",
+      "Is the user account unlinked/factory reset?",
+      "Are all original accessories included?"
+    ],
+    "inspect": "Inspect the display for cracks or deep scratches, the outer casing for dents or scuffs, the charging ports for debris or damage, and confirm the device is fully unpaired and reset to factory settings."
+  },
+  "smart": {
+    "label": "smart device",
+    "photos": 4,
+    "photoGuide": [
+      "front screen or main interface",
+      "back and sides showing ports",
+      "serial number or regulatory label",
+      "included accessories and power adapter"
+    ],
+    "fields": [
+      "serial",
+      "model"
+    ],
+    "docs": [
+      "bill"
+    ],
+    "checks": [
+      "Does it power on?",
+      "Is the device factory reset?",
+      "Are all original accessories present?"
+    ],
+    "inspect": "Inspect for screen scratches or cracks, housing dents or scuffs, damaged ports, signs of moisture exposure, and ensure the screen and indicators light up when powered."
+  },
+  "smartsw": {
+    "label": "smartwatch",
+    "photos": 5,
+    "photoGuide": [
+      "front screen powered on",
+      "back case and sensors",
+      "both sides of the chassis",
+      "straps and clasp",
+      "serial number engraving or screen"
+    ],
+    "fields": [
+      "serial",
+      "model",
+      "color"
+    ],
+    "docs": [
+      "bill"
+    ],
+    "checks": [
+      "Does it power on?",
+      "Is the touch screen responsive?",
+      "Is the activation/iCloud lock removed?",
+      "Are the original charger and straps included?"
+    ],
+    "inspect": "Check the screen and casing for scratches, cracks, or dents, inspect the band and buckle for wear or tearing, look for dirt or corrosion in the charging contacts, and verify that the display turns on without distortion."
+  },
+  "smartwatc": {
+    "label": "smartwatch",
+    "photos": 5,
+    "photoGuide": [
+      "front screen powered on",
+      "back sensor and charging contacts",
+      "sides and buttons",
+      "straps and buckle",
+      "serial number on device or settings screen"
+    ],
+    "fields": [
+      "serialNumber",
+      "model",
+      "brand"
+    ],
+    "docs": [
+      "bill"
+    ],
+    "checks": [
+      "Does it power on?",
+      "Is the touch screen responsive?",
+      "Is the activation/iCloud lock removed?",
+      "Are original accessories included?"
+    ],
+    "inspect": "Inspect the screen for cracks, scratches, or dead pixels, examine the outer casing and bezel for scuffs or dents, check the band and clasp for wear or damage, and verify that the sensors and charging contacts are clean and free of corrosion."
+  },
+  "sma": {
+    "label": "smartwatch or fitness tracker",
+    "photos": 4,
+    "photoGuide": [
+      "front screen powered on",
+      "back casing and sensors",
+      "straps and buckle",
+      "serial number on device or box"
+    ],
+    "fields": [
+      "serial",
+      "model"
+    ],
+    "docs": [
+      "bill"
+    ],
+    "checks": [
+      "Does it power on?",
+      "Is the activation lock removed?",
+      "Are original charging accessories included?"
+    ],
+    "inspect": "screen scratches or cracks, sensor lens damage, strap wear or tears, charging contact corrosion, and whether the serial number matches the box."
+  }
+}
