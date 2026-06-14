@@ -7,6 +7,7 @@ import GradingResult from "./features/seller/GradingResult";
 import BuyerMarketplace from "./features/buyer/BuyerMarketplace";
 import ItemDetail from "./features/buyer/ItemDetail";
 import GreenCredits from "./features/credits/GreenCredits";
+import DonationVerification from "./features/donation/DonationVerification";
 
 export default function App() {
   // Global role state (shared across top navigation and page routes)
@@ -42,6 +43,9 @@ export default function App() {
           
           {/* Green credits ledgers */}
           <Route path="/credits" element={<GreenCredits />} />
+          
+          {/* Donation Verification */}
+          <Route path="/donations" element={<DonationVerification role={role} />} />
           
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/seller/return" replace />} />

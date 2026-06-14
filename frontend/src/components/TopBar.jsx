@@ -1,7 +1,7 @@
 // frontend/src/components/TopBar.jsx
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, Leaf, RefreshCw } from "lucide-react";
+import { Search, ShoppingCart, Leaf, RefreshCw, Heart } from "lucide-react";
 
 export default function TopBar({ currentRole, onRoleChange }) {
   const navigate = useNavigate();
@@ -133,6 +133,15 @@ export default function TopBar({ currentRole, onRoleChange }) {
             }
           >
             Green Credits Hub
+          </NavLink>
+          <NavLink
+            to="/donations"
+            className={({ isActive }) =>
+              `hover:underline flex items-center gap-1 ${isActive ? "text-amber-400 font-bold" : "text-emerald-400"}`
+            }
+          >
+            <Heart className="w-3 h-3 fill-current" />
+            Smart Donations
           </NavLink>
           <span className="text-emerald-400 flex items-center gap-1 cursor-pointer hover:underline">
             <Leaf className="w-3.5 h-3.5 fill-current" /> Climate Pledge Friendly
