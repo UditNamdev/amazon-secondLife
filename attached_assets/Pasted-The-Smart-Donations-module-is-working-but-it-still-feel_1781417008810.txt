@@ -1,0 +1,244 @@
+The Smart Donations module is working, but it still feels like a prototype dashboard with static cards.
+
+I want to transform Smart Donations into a realistic product experience that clearly demonstrates AI decision-making, trust, sustainability, and impact.
+
+==================================================
+GOAL
+==================================================
+
+The Smart Donations section should answer:
+
+"Why was this item donated?"
+"Who was selected?"
+"Why was this recipient chosen?"
+"What impact was created?"
+"How are Green Credits calculated?"
+
+Every AI decision must be explainable.
+
+==================================================
+1. ADD AI RECIPIENT MATCHING ENGINE
+==================================================
+
+Currently we only show:
+
+Recipient:
+Priya S.
+Distance:
+2 km
+
+This is not enough.
+
+Add a dedicated AI Matching Card.
+
+Example:
+
+AI Recipient Matching
+
+Candidates Evaluated: 4
+
+Priya S.
+Need Score: 96%
+Distance: 2 km
+Category Match: 100%
+Trust Score: 91%
+
+Aman K.
+Need Score: 82%
+Distance: 5 km
+
+Riya P.
+Need Score: 75%
+Distance: 8 km
+
+Selected Recipient:
+Priya S.
+
+Reason:
+Highest need score and closest verified recipient.
+
+==================================================
+2. ADD AI DECISION EXPLANATION
+==================================================
+
+Instead of only showing:
+
+Community Donation Selected
+
+Show WHY.
+
+Example:
+
+AI Routing Decision
+
+Resale Probability:
+25%
+
+Donation Success Probability:
+92%
+
+Refurbishment Benefit:
+12%
+
+Carbon Saving Potential:
+82%
+
+Decision:
+Community Donation
+
+Reason:
+Low resale demand, high local need, and lowest logistics footprint.
+
+==================================================
+3. ADD PRODUCT PASSPORT
+==================================================
+
+Add an expandable Product Passport section.
+
+Example:
+
+AI Product Passport
+
+Condition Score: 91/100
+
+Grade:
+Very Good
+
+Previous Owners:
+1
+
+Damage Detected:
+None
+
+Battery Health:
+96%
+
+Verification Confidence:
+94%
+
+This helps explain why the item is eligible for donation.
+
+==================================================
+4. ADD GREEN CREDIT BREAKDOWN
+==================================================
+
+Currently we only show:
+
+100 Credits
+
+Show how credits were calculated.
+
+Example:
+
+Green Credit Calculation
+
+Base Credits: 40
+
+Local Reuse Bonus: 30
+
+Carbon Reduction Bonus: 20
+
+Fast Reuse Bonus: 10
+
+Total Credits:
+100
+
+This makes rewards feel intelligent.
+
+==================================================
+5. ADD QR VERIFICATION VISIBILITY
+==================================================
+
+The donation verification process should be visible.
+
+Show:
+
+Donation Verification Journey
+
+AI Match Found
+✓
+
+Recipient Accepted
+✓
+
+QR Generated
+✓
+
+Physical Handover
+Pending
+
+Recipient Verified
+Pending
+
+Credits Released
+Pending
+
+Each step should have timestamps.
+
+==================================================
+6. ADD IMPACT STORY CARD
+==================================================
+
+Replace generic metrics with a real story.
+
+Example:
+
+Impact Created
+
+This baby monitor was matched with a verified parent living 2 km away.
+
+Estimated Carbon Saved:
+2.1 kg
+
+Logistics Cost Saved:
+₹150
+
+Landfill Waste Prevented:
+1 Item
+
+Community Impact:
+1 Family Helped
+
+==================================================
+7. MAKE DATA LOOK REAL
+==================================================
+
+Stop using the same demo item everywhere.
+
+Create realistic sample data:
+
+Baby Monitor
+MacBook Air
+Engineering Books
+Study Chair
+Winter Jacket
+
+Different categories should show different AI decisions.
+
+==================================================
+8. ADD MICRO-INTERACTIONS
+==================================================
+
+Add:
+
+Hover states
+Animated progress updates
+Expandable AI reasoning panels
+Impact counters
+Verification success animations
+
+The experience should feel like a real Amazon product feature, not a static hackathon dashboard.
+
+==================================================
+FINAL OBJECTIVE
+==================================================
+
+When a judge opens Smart Donations, they should immediately understand:
+
+1. Why AI selected this donation path.
+2. Why this recipient was chosen.
+3. How trust was established.
+4. How Green Credits were calculated.
+5. What sustainability impact was created.
+
+The Smart Donations section should tell a complete story, not just display statistics.

@@ -1,14 +1,81 @@
 import React, { useState, useEffect } from "react";
-import { ShieldCheck, Users } from "lucide-react";
-import { listDonations } from "../../services/donationStore";
+import { ShieldCheck, Plus, Sparkles, Leaf, Users, BarChart2 } from "lucide-react";
+import { listDonations, generateDemoPayload, createDonation, seedDemoIfEmpty } from "../../services/donationStore";
 import DonorDashboard from "./dashboards/DonorDashboard";
 import BuyerDashboard from "./dashboards/BuyerDashboard";
 import NGODashboard from "./dashboards/NGODashboard";
 import SellerDashboard from "./dashboards/SellerDashboard";
 
+const DEMO_ITEMS = [
+  { label: "Baby Monitor", emoji: "👶" },
+  { label: "MacBook Air", emoji: "💻" },
+  { label: "Engineering Books", emoji: "📚" },
+  { label: "Study Chair", emoji: "🪑" },
+  { label: "Winter Jacket", emoji: "🧥" },
+];
+
+function StatsBar({ donations }) {
+  const totalCredits = donations.reduce((s, d) => s + (d.green_credits || 0), 0);
+  const verified = donations.filter((d) => d.status === "CREDITS_RELEASED" || d.status === "VERIFIED").length;
+  const totalCarbon = donations.length * 2.8;
+
+  return (
+    <div className="grid grid-cols-3 gap-3 mb-6">
+      {[
+        { icon: Leaf, label: "Green Credits Earned", value: `${totalCredits} Cr`, color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-100" },
+        { icon: ShieldCheck, label: "Verified Donations", value: verified, color: "text-indigo-700", bg: "bg-indigo-50", border: "border-indigo-100" },
+        { icon: BarChart2, label: "CO₂ Saved (est.)", value: `${totalCarbon.toFixed(1)} kg`, color: "text-amazon-teal", bg: "bg-cyan-50", border: "border-cyan-100" },
+      ].map(({ icon: Icon, label, value, color, bg, border }) => (
+        <div key={label} className={`${bg} border ${border} rounded-xl p-4 text-center hover:-translate-y-0.5 transition-transform`}>
+          <Icon className={`w-5 h-5 ${color} mx-auto mb-1.5`} />
+          <p className={`text-lg font-black ${color}`}>{value}</p>
+          <p className="text-[10px] text-gray-500 font-semibold mt-0.5">{label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function EmptyState({ onGenerate, generating }) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-8 text-center">
+      <div className="w-16 h-16 bg-gradient-to-br from-amazon-teal to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+        <Sparkles className="w-8 h-8 text-white" />
+      </div>
+      <h2 className="text-lg font-bold text-gray-900 mb-2">No active donations yet</h2>
+      <p className="text-sm text-gray-500 max-w-sm mx-auto mb-6">
+        Load a sample donation to see the full AI decision-making flow — recipient matching, product passport, and impact tracking.
+      </p>
+
+      <div className="flex flex-wrap justify-center gap-2 mb-6">
+        {DEMO_ITEMS.map((item) => (
+          <button
+            key={item.label}
+            onClick={() => onGenerate()}
+            disabled={generating}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 border border-gray-200 hover:border-amazon-teal hover:bg-cyan-50 text-xs font-semibold rounded-full transition-all cursor-pointer"
+          >
+            <span>{item.emoji}</span> {item.label}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={onGenerate}
+        disabled={generating}
+        className="inline-flex items-center gap-2 px-6 py-2.5 bg-amazon-teal text-white font-bold rounded-full shadow hover:bg-cyan-700 hover:scale-105 transition-all disabled:opacity-50"
+      >
+        <Plus className="w-4 h-4" />
+        {generating ? "Generating..." : "Generate Demo Donation"}
+      </button>
+    </div>
+  );
+}
+
 export default function DonationVerification({ role }) {
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [generating, setGenerating] = useState(false);
 
   const loadDonations = () => {
     setDonations(listDonations());
@@ -16,97 +83,97 @@ export default function DonationVerification({ role }) {
   };
 
   useEffect(() => {
+    // Seed a rich demo item if store is empty for first-time visitors
+    seedDemoIfEmpty();
     loadDonations();
     const interval = setInterval(loadDonations, 2000);
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) {
-    return <div className="p-8 text-center text-gray-500">Loading dashboard...</div>;
-  }
+  const handleGenerate = () => {
+    setGenerating(true);
+    setTimeout(() => {
+      createDonation(generateDemoPayload());
+      loadDonations();
+      setGenerating(false);
+    }, 600);
+  };
 
-  // Create a mock donation if the store is empty just for demo visibility
-  const displayDonations = donations.length > 0 ? donations : [];
-
-  // Determine header context based on role
   const roleContext = {
     donor: {
       title: "Donor Handover Hub",
-      desc: "Manage your pending physical handovers and track your incoming Green Credits."
+      desc: "Manage your pending physical handovers and track incoming Green Credits.",
     },
     buyer: {
       title: "Recipient Verification Hub",
-      desc: "Safely receive donated items. Scan QR codes to verify handover and confirm item condition."
+      desc: "Safely receive donated items. Scan QR codes to verify handover and confirm condition.",
     },
     ngo: {
       title: "NGO Operations Command",
-      desc: "Aggregate view of incoming donations, pending pickups, and community impact."
+      desc: "Aggregate view of incoming donations, pending pickups, and community impact.",
     },
     seller: {
       title: "Item Recovery & Routing",
-      desc: "Track the post-return lifecycle of your item. See AI routing decisions and recovered value."
-    }
+      desc: "Track the post-return lifecycle of your item and see AI routing decisions.",
+    },
   };
 
   const currentContext = roleContext[role] || roleContext.buyer;
 
+  if (loading) {
+    return (
+      <div className="p-12 text-center">
+        <div className="w-8 h-8 border-2 border-amazon-teal border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+        <p className="text-sm text-gray-500">Loading dashboard...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-4xl mx-auto p-4 font-sans space-y-6">
-      
-      {/* Global Dashboard Header */}
+    <div className="max-w-5xl mx-auto p-4 font-sans space-y-6">
+
+      {/* ── Header ── */}
       <div className="bg-gradient-to-r from-amazon-teal to-cyan-800 p-6 rounded-xl text-white shadow-md flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-extrabold flex items-center gap-2">
             <ShieldCheck className="w-6 h-6 text-cyan-300" /> {currentContext.title}
           </h1>
-          <p className="text-sm text-cyan-100 mt-1 max-w-lg">
-            {currentContext.desc}
-          </p>
+          <p className="text-sm text-cyan-100 mt-1 max-w-lg">{currentContext.desc}</p>
         </div>
-        <div className="hidden sm:block text-right">
-          <div className="text-[10px] uppercase font-bold text-cyan-200 tracking-widest mb-1">Active Persona</div>
-          <div className="bg-white/20 px-3 py-1 rounded-full text-sm font-bold uppercase backdrop-blur-sm border border-white/30">
-            {role}
+        <div className="flex flex-col items-end gap-2">
+          <div className="hidden sm:block text-right">
+            <div className="text-[10px] uppercase font-bold text-cyan-200 tracking-widest mb-1">Active Persona</div>
+            <div className="bg-white/20 px-3 py-1 rounded-full text-sm font-bold uppercase backdrop-blur-sm border border-white/30">
+              {role}
+            </div>
           </div>
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white/20 hover:bg-white/30 border border-white/30 text-white text-[11px] font-bold rounded-full transition-all disabled:opacity-50"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            {generating ? "Adding..." : "Add Demo Item"}
+          </button>
         </div>
       </div>
 
-      {/* Role-Based Dashboard Routing */}
+      {/* ── Stats Bar (only if we have donations) ── */}
+      {donations.length > 0 && <StatsBar donations={donations} />}
+
+      {/* ── Dashboard Routing ── */}
       {donations.length === 0 && role !== "ngo" && role !== "seller" ? (
-         <div className="max-w-4xl mx-auto p-8 text-center bg-white rounded-xl border border-gray-200 shadow-sm mt-8">
-            <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <h2 className="text-lg font-bold text-gray-900">No active tracking</h2>
-            <p className="text-sm text-gray-500 mt-2">There are no active items in your queue right now.</p>
-            <button
-               onClick={() => {
-                  import("../../services/donationStore").then(({ createDonation }) => {
-                     createDonation({
-                        product_id: "demo_123",
-                        productName: "Demo Baby Monitor",
-                        category: "baby",
-                        donor_id: "u_donor",
-                        donor_name: "Rahul M.",
-                        recipient_id: "u_recip",
-                        recipient_name: "Priya S.",
-                        recipient_type: "New parent",
-                        distance: 2.0,
-                        need_score: 95,
-                        green_credits: 100
-                     });
-                     loadDonations();
-                  });
-               }}
-               className="mt-6 px-6 py-2 bg-amazon-teal text-white font-bold rounded-full shadow hover:bg-cyan-700 transition-colors"
-            >
-               Generate Demo Item
-            </button>
-         </div>
+        <EmptyState onGenerate={handleGenerate} generating={generating} />
       ) : (
         <div className="space-y-6">
-          {role === "donor" && displayDonations.map(d => <DonorDashboard key={d.id} donation={d} onUpdate={loadDonations} />)}
-          {role === "buyer" && displayDonations.map(d => <BuyerDashboard key={d.id} donation={d} onUpdate={loadDonations} />)}
-          {role === "ngo" && <NGODashboard donations={displayDonations} />}
-          {role === "seller" && <SellerDashboard donations={displayDonations} />}
+          {role === "donor" && donations.map((d) => (
+            <DonorDashboard key={d.id} donation={d} onUpdate={loadDonations} />
+          ))}
+          {role === "buyer" && donations.map((d) => (
+            <BuyerDashboard key={d.id} donation={d} onUpdate={loadDonations} />
+          ))}
+          {role === "ngo" && <NGODashboard donations={donations} />}
+          {role === "seller" && <SellerDashboard donations={donations} />}
         </div>
       )}
 
